@@ -1,0 +1,65 @@
+/*
+ * Test.cpp
+ *
+ *  Created on: 3/07/2017
+ *      Author: wangsc
+ */
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <string>
+#include "Codec.h"
+using namespace std;
+
+
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if (!root) { return {}; }
+        vector<int> row;
+        vector<vector<int> > result;
+        queue<TreeNode*> q;
+        q.push(root);
+        int count = 1;
+        while (!q.empty()) {
+            if (q.front()->left) { q.push(q.front()->left); }
+            if (q.front()->right) { q.push(q.front()->right); }
+            row.push_back(q.front()->val), q.pop();
+            if (--count == 0) {
+                result.emplace_back(row), row.clear();
+                count = q.size();
+            }
+        }
+        return result;
+    }
+};
+
+int main ()
+{
+	Codec c;
+	string data = "1,2,3,4,5,6,7";
+	TreeNode * root = c.deserialize(data);
+//	string val = c.serialize(root);
+//
+//
+//    cout << " the  value is " << val << ".\n";
+//	Solution s ;
+//	vector<vector<int>>  rst = s.levelOrder (root);
+//	vector< vector<int> >::iterator row;
+//	vector<int>::iterator col;
+//	for (row = rst.begin(); row != rst.end(); row++) {
+//		int count = 0 ;
+//	    for (col = row->begin(); col != row->end(); col++) {
+//	        // do stuff ...
+////             cout << *col ;
+//             count++ ;
+//	    }
+//	    cout << "count number : " << count << "\n" ;
+////	    cout << "\n";
+//	}
+
+    return 0;
+}

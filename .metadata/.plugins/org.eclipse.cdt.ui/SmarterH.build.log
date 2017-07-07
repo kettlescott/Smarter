@@ -1,0 +1,19 @@
+15:12:47 **** Incremental Build of configuration Debug for project SmarterH ****
+make all 
+Building file: ../Codec.c
+Invoking: Cygwin C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Codec.d" -MT"Codec.d" -o "Codec.o" "../Codec.c"
+../Codec.c: In function 'main':
+../Codec.c:187:22: warning: unused variable 'root' [-Wunused-variable]
+     struct TreeNode* root = deserialize ("[1,10,null,9,11,null,8,12,null,7,null,null,13,null,6,14,null,5,null,null,15,null,4,16,null,3,null,null,17,null,2,18,null,1,null,null,19]");
+                      ^
+Finished building: ../Codec.c
+ 
+Building target: SmarterH.exe
+Invoking: Cygwin C Linker
+gcc  -o "SmarterH.exe"  ./Codec.o   
+Finished building target: SmarterH.exe
+ 
+
+15:12:48 Build Finished (took 1s.142ms)
+

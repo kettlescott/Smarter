@@ -1,0 +1,18 @@
+/*
+ * TreeNode.h
+ *
+ *  Created on: 3/07/2017
+ *      Author: wangsc
+ */
+
+#ifndef TREENODE_H_
+#define TREENODE_H_
+
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+#endif /* TREENODE_H_ */

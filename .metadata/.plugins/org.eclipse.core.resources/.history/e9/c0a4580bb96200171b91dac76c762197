@@ -1,0 +1,59 @@
+/*
+ * Test.cpp
+ *
+ *  Created on: 3/07/2017
+ *      Author: wangsc
+ */
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <string>
+#include "Codec.h"
+using namespace std;
+
+
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if (!root) { return {}; }
+        vector<int> row;
+        vector<vector<int> > result;
+        queue<TreeNode*> q;
+        q.push(root);
+        int count = 1;
+        while (!q.empty()) {
+            if (q.front()->left) { q.push(q.front()->left); }
+            if (q.front()->right) { q.push(q.front()->right); }
+            row.push_back(q.front()->val), q.pop();
+            if (--count == 0) {
+                result.emplace_back(row), row.clear();
+                count = q.size();
+            }
+        }
+        return result;
+    }
+};
+
+int main ()
+{
+//	cout << "Please enter an integer value: ";
+	Codec c;
+	string data = "[1,10,null,9,11,null,8,12,null,7,null,null,13,null,6,14,null,5,null,null,15,null,4,16,null,3,null,null,17,null,2,18,null,1,null,null,19]";
+
+//	cout << "hello" ;
+	TreeNode * root = c.deserialize(data);
+
+//	string rst = c.serialize(root) ;
+////
+//	cout << "tree :" << rst ;
+
+//	cout << root->val ;
+//	cout << root->left->val;
+//	cout << root->right->val;
+
+
+    return 0;
+}
