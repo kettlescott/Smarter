@@ -11,49 +11,26 @@
 #include <queue>
 #include <string>
 #include "Codec.h"
+#include <sstream>
 using namespace std;
 
 
 
-class Solution {
-public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        if (!root) { return {}; }
-        vector<int> row;
-        vector<vector<int> > result;
-        queue<TreeNode*> q;
-        q.push(root);
-        int count = 1;
-        while (!q.empty()) {
-            if (q.front()->left) { q.push(q.front()->left); }
-            if (q.front()->right) { q.push(q.front()->right); }
-            row.push_back(q.front()->val), q.pop();
-            if (--count == 0) {
-                result.emplace_back(row), row.clear();
-                count = q.size();
-            }
-        }
-        return result;
-    }
-};
+
 
 int main ()
 {
-//	cout << "Please enter an integer value: ";
-	Codec c;
-	string data = "1,2,3,null,3,3,3";
 
-//	cout << "hello" ;
-	TreeNode * root = c.deserialize(data);
+   Codec c ;
 
+   string s = "[1,2,3]" ;
+   TreeNode *root = c.deserialize(s);
+//   cout << root->val;
+   int a=72;
+       int b=072;
 
-	string rst = c.serialize(root) ;
-////
-	cout << "tree :" << rst ;
-
-//	cout << root->val ;
-//	cout << root->left->val;
-//	cout << root->right->val;
+       cout << "a: " << "test" << endl;
+       cout << "b: " << b << endl;
 
 
     return 0;

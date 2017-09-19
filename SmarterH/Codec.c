@@ -1,9 +1,11 @@
 /*
  * Codec.c
+
  *
  *  Created on: 3/07/2017
  *      Author: wangsc
  */
+#define _GNU_SOURCE 1
 #include "TreeNode.h"
 #include "Codec.h"
 #include <stddef.h>
@@ -27,6 +29,9 @@ struct List_Node * head = NULL ;
 struct List_Node * cur = NULL ;
 
 int SIZE = 0 ;
+
+
+
 
 
 
@@ -88,10 +93,28 @@ char* concat(const char *s1, const char *s2)
     return result;
 }
 
+char * nomalizeArray(char *orginal){
+   int s = -1 ;
+   int e = -1 ;
+   for (int i = 0 ; orginal[i] != '\0' ; ++i) {
+          if (s == - 1 && orginal[i] == '['){
+        	  s = i ;
+          }
+          if (e == -1 && orginal[i] == ']'){
+        	  e = i ;
+          }
+          if (s != -1 && e != -1) break;
+   }
+   char* substr = malloc(strlen(orginal) + 1) ;
+   strncpy(substr, orginal + s + 1, e - s - 1);
+   substr[e] = '\0';
+   return substr ;
+}
+
 
 char* serialize(struct TreeNode* root) {
 	 if (root == NULL) {
-         return "null ";
+         return "null";
      }
      head = NULL ;
      SIZE = 0 ;
@@ -123,7 +146,9 @@ char* serialize(struct TreeNode* root) {
 
 
 struct TreeNode* deserialize(char* data) {
-		char * data_value[1000];
+	    if (strlen(data) == 0) return NULL ;
+	    data = nomalizeArray (data);
+		char * data_value[2000];
 		char *quote = strdup(data);
 		char *pch;
 		pch = strtok(quote, ",[]");
@@ -134,6 +159,7 @@ struct TreeNode* deserialize(char* data) {
 			pch = strtok(NULL, ",[]");
 			i++;
 		}
+	   if (i == 0) return NULL ;
        return buildTree(data_value, i) ;
 }
 
@@ -141,6 +167,7 @@ struct TreeNode* deserialize(char* data) {
 struct TreeNode*  buildTree(char* data [], int len) {
 	   head = NULL ;
 	   struct TreeNode* root = (struct TreeNode *)malloc (sizeof(struct TreeNode));
+	   if (strcmp("null",data[0]) == 0) return NULL;
 	   root->val = (int) strtol(data[0], (char **)NULL, 10);
        root->left = NULL;
        root->right = NULL;
@@ -171,55 +198,10 @@ struct TreeNode*  buildTree(char* data [], int len) {
 
 
 
-void preorder (struct TreeNode* root){
-  if (root == NULL) return  ;
-  printf("%d", root->val);
-  preorder(root->left);
-  preorder(root->right);
-}
 
 
 
 
-int main (){
-
-//    char * data [] = {"1", "2", "3","4","5","6"} ;
-    struct TreeNode* root = deserialize ("[1,10,null,9,11,null,8,12,null,7,null,null,13,null,6,14,null,5,null,null,15,null,4,16,null,3,null,null,17,null,2,18,null,1,null,null,19]");
-//    preorder(root);
-    char* rst = serialize (NULL);
-    printf("%s", rst);
-//    printf("%d", root->val);
-//    printf("%d", root->left->val);
-//    printf("%d", root->right->val);
-
-//	 for (int i = 0 ; i < 100 ; ++i) {
-//		 struct TreeNode* a = (struct TreeNode *)malloc (sizeof(struct TreeNode));
-//		 a->val = i + 1 ;
-//		 offer (a);
-//		 printf("%d", poll()->val);
-//	 }
-//	 printf("%d", isEmpty());
-//	 printf("%d", poll()->val);
-//	 printf("%d", isEmpty());
-//	 while (isEmpty () == 0) {
-//		 printf("%d", poll()->val);
-//	 }
-
-//	 printf("%d", head -> next == NULL);
-//	 printf("%d", head -> next == NULL);
-//	 printf("%d", poll()->val);
-//	 printf("%d", poll()->val);
-////	 printf("%d", !isEmpty());
-//
-//
-//	 while (isEmpty() == 1) {
-//		 printf("%d", poll()->val);
-//	 }
-//	 printf("%d", head ->next->node->val);
-//	 printf("%d", head ->next->next->node->val);
-
-	return 1 ;
-}
 
 
 

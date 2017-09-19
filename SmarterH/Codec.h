@@ -13,6 +13,6 @@ char* serialize(struct TreeNode* root) ;
 
 struct TreeNode* deserialize(char* data) ;
 
-
+char * nomalizeArray(char *orginal);
 
 #endif /* CODEC_H_ */

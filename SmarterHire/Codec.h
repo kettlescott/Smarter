@@ -20,10 +20,7 @@ public:
 	void serialize(TreeNode* root, ostringstream& out );
 	TreeNode* deserialize(const string& s, int lower, int upper, int & pos );
 	TreeNode* deserialize(string data);
-
 };
-
-
 
 
 #endif /* CODEC_H_ */

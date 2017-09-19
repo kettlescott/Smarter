@@ -15,7 +15,7 @@
 #include <vector>
 #include <queue>
 #include <sstream>
-
+#include <string.h>
 
 Codec::Codec() {
 	// TODO Auto-generated constructor stub
@@ -26,11 +26,13 @@ Codec::~Codec() {
 	// TODO Auto-generated destructor stub
 }
 
+
+
 string Codec:: serialize(TreeNode* root)
  {
 	ostringstream out;
 	if (root == nullptr) {
-		return "null ";
+		return "null";
 	}
 	queue<TreeNode*> q ;
 	q.push(root);
@@ -57,34 +59,40 @@ string Codec:: serialize(TreeNode* root)
 
 
 TreeNode* Codec:: deserialize(string data) {
-	 queue<TreeNode*> q ;
-     vector<string> value ;
-     std::istringstream  ss(data);
-     string v ;
-     std::string token;
-     while(std::getline(ss, token, ',')) {
-    	 cout << token;
-         value.push_back(token);
-     }
-     if (value.size() == 0) return nullptr;
-     TreeNode* root = new TreeNode(stoi(value[0]));
-     q.push(root);
-     for (unsigned int i = 1 ; i < value.size() ; i += 2) {
-            TreeNode * cur = q.front(	) ;
-            q.pop();
-            if (value[i].compare("null") != 0) {
-            	 TreeNode* left = new TreeNode(stoi(value[i]));
-            	 cur->left = left ;
-            	 q.push(left);
-            }
-            if (i + 1 < value.size() && value[i + 1].compare("null") != 0) {
-                TreeNode * right = new TreeNode(stoi(value[i + 1]));
-                cur->right = right;
-                q.push(right);
-            }
-     }
-     return root ;
+	         if (data.empty()) return nullptr;
+	         std::size_t head = data.find('[') ;
+	         std::size_t tail = data.find(']');
+	         if (head == std::string::npos || tail == std::string::npos) return nullptr;
+	         if (head + 1 > tail - 1) return nullptr;
+	         data = data.substr(head + 1, tail - head - 1);
+	         queue<TreeNode*> q ;
+	         vector<string> value ;
+	         std::istringstream  ss(data);
+	         string v ;
+	         std::string token;
+	         while(std::getline(ss, token, ',')) {
+	             value.push_back(token);
+	         }
+	         if (value[0] == "null") {
+	             return nullptr;
+	         }
+	         TreeNode* root = new TreeNode(stoi(value[0]));
+	         q.push(root);
+	         for (unsigned int i = 1 ; i < value.size() ; i += 2) {
+	                TreeNode * cur = q.front() ;
+	                q.pop();
+	                if (value[i] != "null") {
+	                     TreeNode* left = new TreeNode(stoi(value[i]));
+	                     cur->left = left ;
+	                     q.push(left);
+	                }
+	                if (i + 1 < value.size() && value[i + 1]!= "null") {
+	                    TreeNode * right = new TreeNode(stoi(value[i + 1]));
+	                    cur->right = right;
+	                    q.push(right);
+	                }
+	         }
+	         return root ;
  }
-
 
 
